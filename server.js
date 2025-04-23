@@ -7,6 +7,7 @@ import { S3Store } from '@tus/s3-store';
 const app = express();
 app.use(cors({
   origin: '*', // ou seu frontend específico em prod
+  credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'HEAD', 'OPTIONS'],
   allowedHeaders: [
     'Tus-Resumable',
