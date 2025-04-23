@@ -10,19 +10,20 @@ app.use(cors());
 const tusServer = new Server({
   path: '/files',
   datastore: new S3Store({
-    bucket: process.env.S3_BUCKET,
     s3ClientConfig: {
+      bucket: process.env.S3_BUCKET,
       region: process.env.AWS_REGION,
       credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
       },
     },
-    partSize: 8 * 1024 * 1024,
+    partSize: 2 * 1024 * 1024,
   }),
 });
 
-app.all('/files', tusServer.handle.bind(tusServer));
+app.all('/files/', tusServer.handle.bind(tusServer));
+app.all('/files/:id', tusServer.handle.bind(tusServer));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
