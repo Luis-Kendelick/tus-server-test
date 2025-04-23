@@ -22,6 +22,10 @@ const tusServer = new Server({
   }),
 });
 
+tusServer.getUrl = (req, id) => {
+  return `https://${req.headers.host}${tusServer.options.path}/${id}`;
+};
+
 app.all('/files/', tusServer.handle.bind(tusServer));
 app.all('/files/:id', tusServer.handle.bind(tusServer));
 
