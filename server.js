@@ -24,6 +24,7 @@ app.use(cors({
 
 const tusServer = new Server({
   path: '/files',
+  allowedCredentials: true,
   datastore: new S3Store({
     s3ClientConfig: {
       bucket: process.env.S3_BUCKET,
