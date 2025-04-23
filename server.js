@@ -1,9 +1,8 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { Server } = require("@tus/server");
-const { FileStore } = require('@tus/file-store');
-const { S3Store } = require('@tus/s3-store');
+import 'dotenv/config'
+import express from 'express';
+import cors from 'cors';
+import { Server } from '@tus/server';
+import { S3Store } from '@tus/s3-store';
 
 const app = express();
 app.use(cors());
