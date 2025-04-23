@@ -11,6 +11,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@tus/file-store": "^2.0.0",
+    "@tus/s3-store": "^2.0.0",
     "@tus/server": "^2.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
