@@ -5,27 +5,12 @@ import { Server } from '@tus/server';
 import { S3Store } from '@tus/s3-store';
 
 const app = express();
-app.use(cors({
-  origin: '*', // ou seu frontend específico em prod
-  credentials: true,
-  methods: ['GET', 'POST', 'PATCH', 'HEAD', 'OPTIONS'],
-  allowedHeaders: [
-    'Tus-Resumable',
-    'Upload-Length',
-    'Upload-Metadata',
-    'Upload-Offset',
-    'Content-Type',
-  ],
-  exposedHeaders: [
-    'Location',
-    'Upload-Offset',
-    'Tus-Resumable',
-  ],
-}));
+app.use(cors());
 
 const tusServer = new Server({
   path: '/files',
   allowedCredentials: true,
+  respectForwardedHeaders: true,
   datastore: new S3Store({
     s3ClientConfig: {
       bucket: process.env.S3_BUCKET,
@@ -38,10 +23,6 @@ const tusServer = new Server({
     partSize: 2 * 1024 * 1024,
   }),
 });
-
-tusServer.getUrl = (req, id) => {
-  return `https://${req.headers.host}${tusServer.options.path}/${id}`;
-};
 
 app.all('/files/', tusServer.handle.bind(tusServer));
 app.all('/files/:id', tusServer.handle.bind(tusServer));
