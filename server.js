@@ -5,7 +5,22 @@ import { Server } from '@tus/server';
 import { S3Store } from '@tus/s3-store';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*', // ou seu frontend específico em prod
+  methods: ['GET', 'POST', 'PATCH', 'HEAD', 'OPTIONS'],
+  allowedHeaders: [
+    'Tus-Resumable',
+    'Upload-Length',
+    'Upload-Metadata',
+    'Upload-Offset',
+    'Content-Type',
+  ],
+  exposedHeaders: [
+    'Location',
+    'Upload-Offset',
+    'Tus-Resumable',
+  ],
+}));
 
 const tusServer = new Server({
   path: '/files',
